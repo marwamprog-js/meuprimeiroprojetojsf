@@ -1,30 +1,57 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"> <h:head>
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"> 
+
+<h:head>
 	<title>Olá JSF</title>
 </h:head> 
 
 <h:body>
-
+	
 	<h1>Primeira Página JSF</h1>
 
 	<h:form id="formPessoa">
+		<h:outputLabel value="ID:" />
+		<h:inputText id="id" value="#{pessoaBean.pessoa.id}" readonly="true" /><br/>
 		<h:outputLabel>Nome: </h:outputLabel>
-		<h:inputText id="campoNome" value="#{pessoaBean.nome}" /><br/>
-		<h:inputSecret id="senha" value="#{pessoaBean.senha}" /><br/><br/>
-		<h:inputTextarea id="texto" value="#{pessoaBean.texto}" />
-		<h:commandButton value="Adicionar Nome" action="#{pessoaBean.addNome}" />
+		<h:inputText id="nome" value="#{pessoaBean.pessoa.nome}" /><br/>
+		<h:outputLabel>Sobrenome: </h:outputLabel>
+		<h:inputText id="sobrenome" value="#{pessoaBean.pessoa.sobrenome}" /><br/>
+		<h:outputLabel>Idade: </h:outputLabel>
+		<h:inputText id="idade" value="#{pessoaBean.pessoa.idade}" /><br/>
 		
+		<h:commandButton value="Novo" action="#{pessoaBean.novo}" />
+		<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" />
+		<h:commandButton value="Remover" action="#{pessoaBean.remove}" />	
+		
+		<br/>
+		<br/>
+		
+		<h:dataTable value="#{pessoaBean.pessoas}" var="pessoa">
+			<h:column>
+				<h:outputText value="#{pessoa.id}" />
+			</h:column>
+			<h:column>
+				<h:outputText value="#{pessoa.nome}" />
+			</h:column>
+			<h:column>
+				<h:outputText value="#{pessoa.sobrenome}" />
+			</h:column>
+			<h:column>
+				<h:commandLink value="Editar">
+					<f:setPropertyActionListener value="#{pessoa}" target="#{pessoaBean.pessoa}" />
+				</h:commandLink>
+			</h:column>	
+			<h:column>
+				<h:commandLink value="Excluir" action="#{pessoaBean.remove}">
+					<f:setPropertyActionListener value="#{pessoa}" target="#{pessoaBean.pessoa}" />
+				</h:commandLink>
+			</h:column>		
+		</h:dataTable>	
 	</h:form>
 	
-	<br/>
-	<hr/>
 	
-	<h:dataTable value="#{pessoaBean.nomes}" var="nome">
-		<h:column>
-			<h:outputText value="#{nome}"/>
-		</h:column>
-	</h:dataTable>
 </h:body> 
 </html>
