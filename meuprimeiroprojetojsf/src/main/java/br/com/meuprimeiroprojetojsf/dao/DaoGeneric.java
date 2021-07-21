@@ -93,7 +93,7 @@ public class DaoGeneric<E> {
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		
-		List<E> retorno = entityManager.createQuery("from " + entidade.getName()).getResultList();
+		List<E> retorno = entityManager.createQuery("from " + entidade.getName() + " order by id").getResultList();
 		
 		transaction.commit();
 		entityManager.close();
