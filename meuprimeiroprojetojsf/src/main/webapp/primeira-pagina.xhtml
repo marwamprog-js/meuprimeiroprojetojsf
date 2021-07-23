@@ -2,16 +2,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"> <h:head>
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui = "http://java.sun.com/jsf/facelets"> <h:head>
 	<title>Cadastro de Usuário</title>
 </h:head> <h:body>
 
-	<div style="width: 960px; margin: 100px auto;"> 
-	
-		
-	<h:form id="formPessoa">
-	
-		<h:panelGrid columns="2">
+	<ui:include src="/menu.xhtml" />
+
+	<div style="width: 960px; margin: 50px auto;"> <h:form
+		id="formPessoa">
+
+		<h:messages infoStyle="color:green;" />
+
+		<h:panelGrid columns="2"
+			rendered="#{pessoaBean.permitirAcesso('ADMINISTRADOR')}">
 			<f:facet name="header">
 				<h:outputText value="Cadastro de Usuário" />
 			</f:facet>
@@ -24,45 +28,68 @@
 			<h:outputLabel>Idade: </h:outputLabel>
 			<h:inputText id="idade" value="#{pessoaBean.pessoa.idade}" />
 
-			<h:outputLabel value="Sexo:" />
-			<h:selectOneMenu id="campoSexo" value="#{pessoaBean.pessoa.sexo}">
-				<f:selectItem itemValue="N" itemLabel=".... Selecione ......" noSelectionOption="true" />
-				<f:selectItem itemValue="M" itemLabel="Masculino"/>
-				<f:selectItem itemValue="F" itemLabel="Feminino"/>
-			</h:selectOneMenu>
+			<h:outputLabel value="Nível:" />
+			<!--<h:selectOneMenu id="campoSexo" value="#{pessoaBean.pessoa.sexo}">
+				<f:selectItem itemValue="N" itemLabel=".... Selecione ......"
+					noSelectionOption="true" />
+				<f:selectItem itemValue="M" itemLabel="Masculino" />
+				<f:selectItem itemValue="F" itemLabel="Feminino" />
+			</h:selectOneMenu>-->
+			<h:selectOneRadio value="#{pessoaBean.pessoa.nivel}" layout="pageDirection">
+				<f:selectItem itemValue="J" itemLabel="Junior" />
+				<f:selectItem itemValue="P" itemLabel="Pleno" />
+				<f:selectItem itemValue="S" itemLabel="Senior" />
+			</h:selectOneRadio>
+			<h:outputLabel />
 
 			<h:outputLabel value="Frameworks: " />
-			<h:selectManyMenu id="campoFrameworks" value="#{pessoaBean.pessoa.frameworks}"  style="height: 150px;">
-				<f:selectItem itemValue="Hibernate"/>
-				<f:selectItem itemValue="Spring MVC"/>
-				<f:selectItem itemValue="JPA"/>
-				<f:selectItem itemValue="PrimeFaces"/>
-				<f:selectItem itemValue="JSF"/>
+			<h:selectManyMenu id="campoFrameworks"
+				value="#{pessoaBean.pessoa.frameworks}" style="height: 150px;">
+				<f:selectItem itemValue="Hibernate" />
+				<f:selectItem itemValue="Spring MVC" />
+				<f:selectItem itemValue="JPA" />
+				<f:selectItem itemValue="PrimeFaces" />
+				<f:selectItem itemValue="JSF" />
 			</h:selectManyMenu>
-			
+
+			<h:outputLabel value="Linguagens: " />
+			<h:selectManyCheckbox value="#{pessoaBean.pessoa.linguagens}">
+				<f:selectItem itemLabel="Java" itemValue="1" />
+				<f:selectItem itemLabel="PHP" itemValue="2" />
+				<f:selectItem itemLabel="Pyton" itemValue="3" />
+				<f:selectItem itemLabel="C#" itemValue="4" />
+				<f:selectItem itemLabel="Javascript" itemValue="5" />
+			</h:selectManyCheckbox>
+
 			<h:outputLabel value="Ativo: " />
 			<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}" />
-
+			
 			<h:outputLabel value="Login: " />
 			<h:inputText id="login" value="#{pessoaBean.pessoa.login}" />
-			
+
 			<h:outputLabel value="Senha: " />
 			<h:inputSecret id="senha" value="#{pessoaBean.pessoa.senha}" />
 
 			<h:outputLabel value="Perfil:" />
-			<h:selectOneMenu id="campoPerfil" value="#{pessoaBean.pessoa.perfilUser}">
-				<f:selectItem itemValue="N" itemLabel=".... Selecione ......" noSelectionOption="true" />
-				<f:selectItem itemValue="ADMINISTRADOR" itemLabel="Administrador"/>
-				<f:selectItem itemValue="SECRETARIO" itemLabel="Secretário"/>
-				<f:selectItem itemValue="RECEPCIONISTA" itemLabel="Recepcionista"/>
+			<h:selectOneMenu id="campoPerfil"
+				value="#{pessoaBean.pessoa.perfilUser}">
+				<f:selectItem itemValue="N" itemLabel=".... Selecione ......"
+					noSelectionOption="true" />
+				<f:selectItem itemValue="ADMINISTRADOR" itemLabel="Administrador" />
+				<f:selectItem itemValue="SECRETARIO" itemLabel="Secretário" />
+				<f:selectItem itemValue="RECEPCIONISTA" itemLabel="Recepcionista" />
 			</h:selectOneMenu>
 
 			<h:outputLabel />
 			<h:panelGroup>
-				<h:commandButton value="Novo" action="#{pessoaBean.novo}" image="/resources/img/btnNovo.png" title="Novo"/>
-				<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" image="/resources/img/btnSalvar.png" title="Salvar"/>
-				<h:commandButton value="Remover" action="#{pessoaBean.remove}" image="/resources/img/btnExcluir.png" title="Excluir"/>
-				<h:commandButton value="Limpar" type="reset" image="/resources/img/btnLimpar.png" title="Limpar"/>
+				<h:commandButton value="Novo" action="#{pessoaBean.novo}"
+					image="/resources/img/btnNovo.png" title="Novo" />
+				<h:commandButton value="Salvar" action="#{pessoaBean.salvar}"
+					image="/resources/img/btnSalvar.png" title="Salvar" />
+				<h:commandButton rendered="#{pessoaBean.permitirAcesso('ADMINISTRADOR')}" value="Remover" action="#{pessoaBean.remove}"
+					image="/resources/img/btnExcluir.png" title="Excluir" />
+				<h:commandButton value="Limpar" type="reset"
+					image="/resources/img/btnLimpar.png" title="Limpar" />
 			</h:panelGroup>
 		</h:panelGrid>
 
@@ -93,20 +120,18 @@
 				<h:commandLink title="Editar" style="margin-right: 10px;">
 					<f:setPropertyActionListener value="#{pessoa}"
 						target="#{pessoaBean.pessoa}" />
-						<h:graphicImage value="/resources/img/btnEditar.png" />
+					<h:graphicImage value="/resources/img/btnEditar.png" />
 				</h:commandLink>
 			</h:column>
-			<h:column>
+			<h:column rendered="#{pessoaBean.permitirAcesso('ADMINISTRADOR')}">
 				<f:facet name="header">Excluir</f:facet>
 				<h:commandLink action="#{pessoaBean.remove}" title="Excluir">
 					<f:setPropertyActionListener value="#{pessoa}"
 						target="#{pessoaBean.pessoa}" />
-					<h:graphicImage value="/resources/img/btnExcluir.png"/>
+					<h:graphicImage value="/resources/img/btnExcluir.png" />
 				</h:commandLink>
 			</h:column>
 		</h:dataTable>
-	</h:form>
-	
- </div>
+	</h:form> </div>
 
 </h:body> </html>

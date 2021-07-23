@@ -5,6 +5,7 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		
 		<class>br.com.meuprimeiroprojetojsf.model.Pessoa</class>
+		<class>br.com.meuprimeiroprojetojsf.model.Lancamento</class>
 		
 		<!-- POSTGRE -->
 		<properties>

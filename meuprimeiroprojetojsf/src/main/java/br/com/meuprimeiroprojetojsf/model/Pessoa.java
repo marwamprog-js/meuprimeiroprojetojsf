@@ -28,11 +28,13 @@ public class Pessoa implements Serializable {
 	private Date dataNascimento;
 	
 	private String sexo;
+	private String nivel;
 	private String[] frameworks;
 	private Boolean ativo;
 	private String login;
 	private String senha;
 	private String perfilUser;
+	private Integer[] linguagens;
  	
 	public Pessoa() {
 		
@@ -40,6 +42,19 @@ public class Pessoa implements Serializable {
 	
 	
 	
+	
+	public void setLinguagens(Integer[] linguagens) {
+		this.linguagens = linguagens;
+	}
+	public Integer[] getLinguagens() {
+		return linguagens;
+	}
+	public String getNivel() {
+		return nivel;
+	}
+	public void setNivel(String nivel) {
+		this.nivel = nivel;
+	}
 	public void setPerfilUser(String perfilUser) {
 		this.perfilUser = perfilUser;
 	}

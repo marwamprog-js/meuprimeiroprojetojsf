@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
@@ -31,11 +32,20 @@ public class PessoaBean {
 	public String salvar() {		
 		pessoa = dao.merge(pessoa);
 		carregarPessoas();
+		mostrarMsg("Cadastrado com Sucesso!!");
 		return "";
 	}
 	
 	
 	
+	private void mostrarMsg(String msg) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		FacesMessage message = new FacesMessage(msg);
+		context.addMessage(null, message);
+	}
+
+
+
 	/*
 	 * NOVO cadastro
 	 * */
@@ -54,6 +64,7 @@ public class PessoaBean {
 		dao.deletePorId(pessoa);
 		pessoa = new Pessoa();
 		carregarPessoas();
+		mostrarMsg("Removido com sucesso");
 		return "";
 	}
 	
@@ -94,6 +105,21 @@ public class PessoaBean {
 		}
 		
 		return "index.jsf";
+	}
+	
+	
+	
+	
+	/*
+	 * Permissão de acesso
+	 * */
+	public boolean permitirAcesso(String acesso) {
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = context.getExternalContext();
+		Pessoa pessoa = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
+		
+		return pessoa.getPerfilUser().equals(acesso);
 	}
 	
 	
