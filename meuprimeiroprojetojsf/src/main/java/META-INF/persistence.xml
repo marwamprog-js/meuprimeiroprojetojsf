@@ -6,6 +6,8 @@
 		
 		<class>br.com.meuprimeiroprojetojsf.model.Pessoa</class>
 		<class>br.com.meuprimeiroprojetojsf.model.Lancamento</class>
+		<class>br.com.meuprimeiroprojetojsf.model.Estados</class>
+		<class>br.com.meuprimeiroprojetojsf.model.Cidades</class>
 		
 		<!-- POSTGRE -->
 		<properties>

@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"> <h:head>
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"> 
+<h:head>
 	<title>Cadastro de Usuário</title>
 </h:head> <h:body>
 
@@ -22,22 +24,27 @@
 			<h:outputLabel value="ID:" />
 			<h:inputText id="id" value="#{pessoaBean.pessoa.id}" readonly="true" />
 			<h:outputLabel>Nome: </h:outputLabel>
-			<h:inputText id="nome" value="#{pessoaBean.pessoa.nome}"
+			
+			<h:inputText id="nome" value="#{pessoaBean.pessoa.nome}" pt:placeholder="Informe o nome."
 				required="true" requiredMessage="Informe o nome do usuário"
-				validatorMessage="Nome tem que ter no mínimo 10 letras.">
-				<f:validateLength minimum="10" maximum="100" />
+				validatorMessage="Nome tem que ter no mínimo 4 letras.">
+				<f:validateLength minimum="5" maximum="100" />
 			</h:inputText>
+			
 			<h:outputLabel>Sobrenome: </h:outputLabel>
 			<h:inputText id="sobrenome" value="#{pessoaBean.pessoa.sobrenome}" />
+			
 			<h:outputLabel>Idade: </h:outputLabel>
 			<h:inputText id="idade" value="#{pessoaBean.pessoa.idade}" />
+			
 			<h:outputLabel value="CPF: " />
-			<h:inputText id="cpf" value="#{pessoaBean.pessoa.cpf}" />
+			<h:inputText id="cpf" value="#{pessoaBean.pessoa.cpf}" pt:placeholder="Informe o CPF válido. " />
+			
 			<h:outputLabel value="Titulo de Eleitor: " />
-			<h:inputText id="tituloEleitor" value="#{pessoaBean.pessoa.tituloEleitor}" />
+			<h:inputText id="tituloEleitor" value="#{pessoaBean.pessoa.tituloEleitor}" pt:placeholder="Informe o Titulo de Eleitor"/>
 			
 			<h:outputLabel value="CEP: " />
-			<h:inputText value="#{pessoaBean.pessoa.cep}" >
+			<h:inputText value="#{pessoaBean.pessoa.cep}" pt:placeholder="Informe o CEP sem pontos e precione TAB">
 				<f:ajax event="blur" execute="@this" listener="#{pessoaBean.pesquisaCep}" render="logradouro complemento numero bairro localidade uf ibge"/>
 			</h:inputText>
 			
@@ -123,6 +130,20 @@
 				<f:selectItem itemValue="SECRETARIO" itemLabel="Secretário" />
 				<f:selectItem itemValue="RECEPCIONISTA" itemLabel="Recepcionista" />
 			</h:selectOneMenu>
+			
+			<h:outputLabel value="Estados" />
+			<h:selectOneMenu value="#{pessoaBean.pessoa.estados}" immediate="true" id="comboEstado" converter="converterEstado">
+				<f:selectItem itemLabel="--[Selecione]--" noSelectionOption="true"/>
+				<f:selectItems value="#{pessoaBean.estados}" />
+				<f:ajax event="change" execute="@this" listener="#{pessoaBean.carregaCidades}" render="comboCidade" />
+			</h:selectOneMenu>
+
+			<h:outputLabel value="Cidades" />
+			<h:selectOneMenu value="#{pessoaBean.pessoa.cidades}" id="comboCidade" immediate="true" converter="converterCidade">
+				<f:selectItem noSelectionOption="true" itemLabel="--[Selecione]--" />
+				<f:selectItems value="#{pessoaBean.cidades}" />
+			</h:selectOneMenu>
+
 
 			<h:outputLabel />
 			<h:panelGroup>
