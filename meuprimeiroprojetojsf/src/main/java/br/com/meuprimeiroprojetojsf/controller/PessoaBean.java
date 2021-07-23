@@ -1,5 +1,10 @@
 package br.com.meuprimeiroprojetojsf.controller;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +14,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+
+import com.google.gson.Gson;
 
 import br.com.meuprimeiroprojetojsf.dao.DaoGeneric;
 import br.com.meuprimeiroprojetojsf.model.Pessoa;
@@ -37,7 +45,51 @@ public class PessoaBean {
 	}
 	
 	
+	/*
+	 * Consumindo RESTFull
+	 * Consulta CEP
+	 * */
+	public void pesquisaCep(AjaxBehaviorEvent event) {
+		
+		try {
+			
+			URL url = new URL("https://viacep.com.br/ws/"+ pessoa.getCep() +"/json/");
+			URLConnection connection = url.openConnection();			
+			InputStream is = connection.getInputStream();
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+			
+			String cep = "";
+			StringBuilder jsonCep = new StringBuilder();
+			
+			while((cep = br.readLine()) != null) {
+				jsonCep.append(cep);
+			}
+			
+			Pessoa gsonAux = new Gson().fromJson(jsonCep.toString(), Pessoa.class);
+			
+			pessoa.setCep(gsonAux.getCep());
+			pessoa.setLogradouro(gsonAux.getLogradouro());
+			pessoa.setComplemento(gsonAux.getComplemento());
+			pessoa.setBairro(gsonAux.getBairro());
+			pessoa.setLocalidade(gsonAux.getLocalidade());
+			pessoa.setUf(gsonAux.getUf());
+			pessoa.setIbge(gsonAux.getIbge());
+			
+			
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			mostrarMsg("Erro ao consultar o CEP.");
+		}
+		
+	}
 	
+	
+	/*
+	 * Mostrar mensagem quando SALVAR / EXCLUIR
+	 * */
 	private void mostrarMsg(String msg) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		FacesMessage message = new FacesMessage(msg);
@@ -50,6 +102,16 @@ public class PessoaBean {
 	 * NOVO cadastro
 	 * */
 	public String novo() {
+		
+		pessoa = new Pessoa();
+		return "";
+	}
+	
+	
+	/*
+	 * LIMPAR
+	 * */
+	public String limpar() {
 		
 		pessoa = new Pessoa();
 		return "";

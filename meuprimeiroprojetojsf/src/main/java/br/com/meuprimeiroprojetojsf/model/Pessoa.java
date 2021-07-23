@@ -13,20 +13,30 @@ import javax.persistence.TemporalType;
 
 @Entity
 public class Pessoa implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
-	
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String nome;
 	private String sobrenome;
 	private int idade;
-	
+	private String cpf;
+	private String tituloEleitor;
+	private String cep;
+	private String logradouro;
+	private Integer numero;
+	private String complemento;
+	private String bairro;
+	private String localidade;
+	private String uf;
+	private String ibge;
+
 	@Temporal(TemporalType.DATE)
-	private Date dataNascimento;
-	
+	private Date dataNascimento = new Date();
+
 	private String sexo;
 	private String nivel;
 	private String[] frameworks;
@@ -35,14 +45,75 @@ public class Pessoa implements Serializable {
 	private String senha;
 	private String perfilUser;
 	private Integer[] linguagens;
- 	
+
+
 	public Pessoa() {
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
+	public Integer getNumero() {
+		return numero;
+	}
+	public void setNumero(Integer numero) {
+		this.numero = numero;
+	}
+	public String getLogradouro() {
+		return logradouro;
+	}
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
+	public String getComplemento() {
+		return complemento;
+	}
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+	public String getBairro() {
+		return bairro;
+	}
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+	public String getLocalidade() {
+		return localidade;
+	}
+	public void setLocalidade(String localidade) {
+		this.localidade = localidade;
+	}
+	public String getUf() {
+		return uf;
+	}
+	public void setUf(String uf) {
+		this.uf = uf;
+	}	
+	public String getIbge() {
+		return ibge;
+	}
+	public void setIbge(String ibge) {
+		this.ibge = ibge;
+	}
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+	public String getCep() {
+		return cep;
+	}
+	public String getCpf() {
+		return cpf;
+	}
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+	public String getTituloEleitor() {
+		return tituloEleitor;
+	}
+	public void setTituloEleitor(String tituloEleitor) {
+		this.tituloEleitor = tituloEleitor;
+	}
 	public void setLinguagens(Integer[] linguagens) {
 		this.linguagens = linguagens;
 	}
@@ -140,8 +211,8 @@ public class Pessoa implements Serializable {
 		Pessoa other = (Pessoa) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
-	
-	
+
+
+
+
 }
