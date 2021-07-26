@@ -11,8 +11,9 @@
 
 	<ui:include src="/menu.xhtml" />
 
-	<div style="width: 960px; margin: 50px auto;"> <h:form
-		id="formPessoa">
+	<div style="width: 960px; margin: 50px auto;"> 
+	
+	<h:form id="formPessoa" enctype="multipart/form-data">
 
 		<h:messages infoStyle="color:green;" />
 
@@ -23,8 +24,11 @@
 			</f:facet>
 			<h:outputLabel value="ID:" />
 			<h:inputText id="id" value="#{pessoaBean.pessoa.id}" readonly="true" />
-			<h:outputLabel>Nome: </h:outputLabel>
 			
+			<h:outputLabel value="Foto: " />
+			<h:inputFile id="foto" value="#{pessoaBean.arquivoFoto}"></h:inputFile>
+			
+			<h:outputLabel>Nome: </h:outputLabel>			
 			<h:inputText id="nome" value="#{pessoaBean.pessoa.nome}" pt:placeholder="Informe o nome."
 				required="true" requiredMessage="Informe o nome do usuário"
 				validatorMessage="Nome tem que ter no mínimo 4 letras.">
@@ -180,6 +184,13 @@
 				<h:outputText value="#{pessoa.id}" />
 			</h:column>
 			<h:column>
+				<f:facet name="header">Foto</f:facet>
+				<h:commandLink actionListener="#{pessoaBean.download}">
+					<h:graphicImage width="60" height="60" value="#{pessoa.fotoIconBase64}" ></h:graphicImage>
+					<f:param name="fileDownloadId" value="#{pessoa.id}" />
+				</h:commandLink>
+			</h:column>
+			<h:column>
 				<f:facet name="header">Nome</f:facet>
 				<h:outputText value="#{pessoa.nome}" />
 			</h:column>
@@ -189,7 +200,7 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">Editar</f:facet>
-				<h:commandLink title="Editar" style="margin-right: 10px;">
+				<h:commandLink title="Editar" immediate="true" action="#{pessoaBean.editar}" style="margin-right: 10px;">
 					<f:setPropertyActionListener value="#{pessoa}"
 						target="#{pessoaBean.pessoa}" />
 					<h:graphicImage value="/resources/img/btnEditar.png" />
