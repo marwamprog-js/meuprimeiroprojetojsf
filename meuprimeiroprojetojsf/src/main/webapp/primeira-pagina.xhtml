@@ -31,8 +31,8 @@
 			<h:outputLabel>Nome: </h:outputLabel>			
 			<h:inputText id="nome" value="#{pessoaBean.pessoa.nome}" pt:placeholder="Informe o nome."
 				required="true" requiredMessage="Informe o nome do usuário"
-				validatorMessage="Nome tem que ter no mínimo 4 letras.">
-				<f:validateLength minimum="5" maximum="100" />
+				validatorMessage="Nome tem que ter no mínimo 4 letras." valueChangeListener="#{pessoaBean.mudancaDeValor}" >
+				<f:validateLength minimum="4" maximum="100" />
 			</h:inputText>
 			
 			<h:outputLabel>Sobrenome: </h:outputLabel>
@@ -151,21 +151,21 @@
 
 			<h:outputLabel />
 			<h:panelGroup>
-				<h:commandButton id="btnNovo" value="Novo"
+				<h:commandButton id="btnNovo" value="Novo" immediate="true"
 					action="#{pessoaBean.novo}" image="/resources/img/btnNovo.png"
 					title="Novo">
 					<f:ajax execute="btnNovo" render="@form" />
 				</h:commandButton>
 
-				<h:commandButton value="Salvar" action="#{pessoaBean.salvar}"
+				<h:commandButton value="Salvar" actionListener="#{pessoaBean.registraLog}" action="#{pessoaBean.salvar}"
 					image="/resources/img/btnSalvar.png" title="Salvar" />
 
 				<h:commandButton
 					rendered="#{pessoaBean.permitirAcesso('ADMINISTRADOR')}"
-					value="Remover" action="#{pessoaBean.remove}"
+					value="Remover" action="#{pessoaBean.remove}" immediate="true"
 					image="/resources/img/btnExcluir.png" title="Excluir" />
 
-				<h:commandButton id="btnLimpar" value="Limpar"
+				<h:commandButton id="btnLimpar" value="Limpar" immediate="true"
 					action="#{pessoaBean.limpar}" image="/resources/img/btnLimpar.png"
 					title="Limpar">
 					<f:ajax execute="btnLimpar" render="@form" />
@@ -208,7 +208,7 @@
 			</h:column>
 			<h:column rendered="#{pessoaBean.permitirAcesso('ADMINISTRADOR')}">
 				<f:facet name="header">Excluir</f:facet>
-				<h:commandLink action="#{pessoaBean.remove}" title="Excluir">
+				<h:commandLink action="#{pessoaBean.remove}" title="Excluir" immediate="true">
 					<f:setPropertyActionListener value="#{pessoa}"
 						target="#{pessoaBean.pessoa}" />
 					<h:graphicImage value="/resources/img/btnExcluir.png" />

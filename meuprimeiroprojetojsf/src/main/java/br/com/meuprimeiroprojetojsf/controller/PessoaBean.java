@@ -22,6 +22,7 @@ import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -47,6 +48,7 @@ public class PessoaBean {
 	private DaoGeneric<Pessoa> dao = new DaoGeneric<Pessoa>();
 	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
 
+	
 	private IDaoPessoa iDaoPessoa = new IDaoPessoaImpl();
 	private List<SelectItem> estados;
 	private List<SelectItem> cidades;
@@ -54,6 +56,21 @@ public class PessoaBean {
 	private Part arquivoFoto;
 	
 	
+	/*
+	 * Registra Log
+	 * */
+	public void registraLog() {
+		System.out.println("método registra log");
+	}
+	
+	
+	/*
+	 * Mundança de valor
+	 * */
+	public void mudancaDeValor(ValueChangeEvent event) {
+		System.out.println("Valor antigo: " + event.getOldValue());
+		System.out.println("Valor novo: " + event.getNewValue());
+	}
 
 	/*
 	 * SALVAR ou ATUALIZAR
